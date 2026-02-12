@@ -14,7 +14,7 @@ export async function StartRoundMessage(bot: WhatsAppBot, chatId: string) {
 
   try {
     await bot.sendMessage(chatId, message);
-    console.log(`Mensagem enviada para ${chatId}`);
+    console.log(`✅ Mensagem de start enviada para ${chatId}`);
   } catch (err) {
     console.error("Erro ao enviar mensagem do Queridometro:", err);
   }

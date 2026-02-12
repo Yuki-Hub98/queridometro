@@ -1,4 +1,5 @@
 import { google } from "googleapis";
+import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import { VoteService } from "./VoteService";
@@ -12,14 +13,20 @@ export class GoogleSheetsService {
   private voteService = new VoteService();
   private userService = new UserService();
 
+
   constructor() {
+    const credentials = JSON.parse(process.env.CREDENTIAL_GOOGLE_API as string);
+
+    credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+
     const auth = new google.auth.GoogleAuth({
-      keyFile: path.join(__dirname, "../../queridometro-487202-d3b9fff7412a.json"),
+      credentials,
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
     this.sheets = google.sheets({ version: "v4", auth });
     this.spreadsheetId = process.env.PLANILHA_QUERIDOMETRO || "";
+    console.log("✅ Google Sheets API ready");
   }
 
   async processSheetVotes(): Promise<void> {

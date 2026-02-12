@@ -91,6 +91,7 @@ export class RoundService {
 
     } catch (err) {
       // Em caso de erro, limpa a flag para que a rodada não fique travada
+      console.error("Erro ao fechar rodada:", err);
       round.isClosing = false;
       await this.roundRepository.save(round);
       throw err;
