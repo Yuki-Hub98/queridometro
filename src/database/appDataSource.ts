@@ -15,5 +15,9 @@ export const appDataSource = new DataSource({
       : "src/entities/*.ts"],
   logging: true,
   synchronize: true,
+  ssl:
+    process.env.NODE_ENV === "prod"
+      ? { rejectUnauthorized: false }
+      : false,
 
 })
